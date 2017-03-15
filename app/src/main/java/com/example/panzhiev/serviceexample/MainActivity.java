@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Runnable{
 
     Button startService;
     Service service;
@@ -15,6 +15,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        run();
+    }
+
+    @Override
+    public void run() {
         startService = (Button) findViewById(R.id.btn_start_service);
         startService.setOnClickListener(new View.OnClickListener() {
             @Override

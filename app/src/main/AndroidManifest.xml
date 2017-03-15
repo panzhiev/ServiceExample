@@ -16,6 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service
+            android:name="com.example.panzhiev.serviceexample.MyService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":myservice">
+        </service>
     </application>
 
 </manifest>
