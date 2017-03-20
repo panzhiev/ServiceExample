@@ -12,11 +12,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
+import com.example.panzhiev.serviceexample.Constants;
 import com.example.panzhiev.serviceexample.MyService;
 import com.example.panzhiev.serviceexample.R;
-import com.example.panzhiev.serviceexample.ServiceDownload;
 import com.example.panzhiev.serviceexample.adapter.MyAdapter;
 
 import java.util.ArrayList;
@@ -26,28 +25,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RecyclerView recyclerView;
     RecyclerView.LayoutManager mLayoutManager;
     Button btnStartService;
+    Button btnStopService;
     Button btnClearNotification;
-    public String TAG = "MY_TAG_MAIN_ACTIVITY";
-    RelativeLayout relativeLayout;
+    public String TAG = "MY_MAIN_ACTIVITY";
     ProgressBar progressBar;
     MyAdapter mAdapter;
-
     private BroadcastReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d(TAG, "onCreate(Bundle savedInstanceState)");
 
-        relativeLayout = (RelativeLayout) findViewById(R.id.RL_with_recycler_view);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
         btnStartService = (Button) findViewById(R.id.btn_start_service);
         btnStartService.setOnClickListener(this);
+        btnStopService = (Button) findViewById(R.id.btn_stop_service);
+        btnStopService.setOnClickListener(this);
         btnClearNotification = (Button) findViewById(R.id.btn_clear_notification);
         btnClearNotification.setOnClickListener(this);
 
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ServiceDownload.Constants.BROADCAST_ACTION);
+        intentFilter.addAction(Constants.BROADCAST_ACTION);
         mReceiver = getReceiver();
         registerReceiver(mReceiver, intentFilter);
 
@@ -60,14 +61,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_start_service:
-                progressBar.setVisibility(View.VISIBLE);
+
                 btnStartService.setVisibility(View.GONE);
                 btnClearNotification.setVisibility(View.GONE);
+                btnStopService.setVisibility(View.GONE);
                 startService(new Intent(this, MyService.class));
                 progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "service is started");
                 break;
             case R.id.btn_clear_notification:
+                break;
+            case R.id.btn_stop_service:
+                stopService(new Intent(this, MyService.class));
                 break;
             default:
                 break;
@@ -76,6 +80,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onResume() {
+        Log.d(TAG, "onResume()");
+//        if(mAdapter != null)
+//        {
+//            mAdapter.notifyDataSetChanged();
+//        }
         super.onResume();
     }
 
@@ -89,8 +98,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return  new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                progressBar.setVisibility(View.INVISIBLE);
-                ArrayList arrayList = intent.getIntegerArrayListExtra(ServiceDownload.Constants.ATTR_IMAGES);
+                Log.d(TAG, "onReceive(Context context, Intent intent)");
+                progressBar.setVisibility(View.GONE);
+                ArrayList arrayList = intent.getIntegerArrayListExtra(Constants.ATTR_IMAGES);
                 mAdapter = new MyAdapter(MainActivity.this, arrayList);
                 recyclerView.setVisibility(View.VISIBLE);
                 recyclerView.setAdapter(mAdapter);

@@ -13,15 +13,21 @@
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
-            android:name="com.example.panzhiev.serviceexample.MyService"
+            android:name="MyService"
             android:enabled="true"
-            android:exported="true"
-            android:process=":myservice"/>
+            android:exported="true">
+        </service>
+
+        <service
+            android:name="ServiceDownload"
+            android:enabled="true"
+            android:exported="true">
+        </service>
 
     </application>
 

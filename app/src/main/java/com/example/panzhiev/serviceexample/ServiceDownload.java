@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -15,10 +16,15 @@ import java.util.concurrent.TimeUnit;
 public class ServiceDownload extends Service {
 
 
+    public String TAG = "MY_ServiceDownload: ";
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d(TAG, "onStartCommand");
 
-        new MyRun(14545445);
+
+        MyRun myRun = new MyRun(startId);
+        new Thread(myRun).start();
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -40,6 +46,7 @@ public class ServiceDownload extends Service {
 
         @Override
         public void run() {
+            Log.d(TAG, "run()");
             ArrayList arrayList = new ArrayList();
             for (int i = 0; i < Constants.IMAGES_BOOK.length; i++) {
                 try {
@@ -56,20 +63,5 @@ public class ServiceDownload extends Service {
         }
     }
 
-    public static class Constants {
 
-        public static int[] IMAGES_BOOK = {R.drawable.adele,
-                R.drawable.cyrus,
-                R.drawable.drake,
-                R.drawable.eminem,
-                R.drawable.laleh,
-                R.drawable.lavigne,
-                R.drawable.mars,
-                R.drawable.perry,
-                R.drawable.yelawolf,
-                R.drawable.minaj};
-
-        public static String ATTR_IMAGES = "ATTR_IMAGES";
-        public static String BROADCAST_ACTION = "BROADCAST_ACTION";
-    }
 }

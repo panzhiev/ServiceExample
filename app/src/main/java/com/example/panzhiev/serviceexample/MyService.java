@@ -16,7 +16,7 @@ import android.util.Log;
 public class MyService extends Service {
 
     NotificationManager nm;
-    public String TAG = "MY_TAG";
+    public String TAG = "MY_MyService: ";
 
     @Override
     public void onCreate() {
@@ -30,9 +30,23 @@ public class MyService extends Service {
         return null;
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, "started");
+        sendNotificationStartService();
+
+//        sendBroadcast(new Intent().setAction("TIMUR"));
+        return super.onStartCommand(intent, flags, startId);
+    }
+
     private void sendNotificationStartService() {
         final int NOTIFY_ID = 101;
-        nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        nm = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
 
 //        IntentFilter intentFilter = new IntentFilter();
 //        intentFilter.addAction("TIMUR");
@@ -56,22 +70,8 @@ public class MyService extends Service {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "onStartCommand is started");
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        sendNotificationStartService();
-        sendBroadcast(new Intent().setAction("TIMUR"));
-        return super.onStartCommand(intent, flags, startId);
-    }
-
-    @Override
     public void onDestroy() {
-        Log.d(TAG, "onStartCommand is stoped");
+        Log.d(TAG, "stoped");
         super.onDestroy();
     }
 }

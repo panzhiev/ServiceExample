@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view_image"
-    android:layout_margin="6dp"
-    android:layout_width="183dp"
-    android:layout_height="183dp">
+    android:layout_margin="8dp"
+    android:layout_width="164dp"
+    android:layout_height="164dp">
 
     <RelativeLayout
         android:id="@+id/RL_item"
