@@ -76,7 +76,7 @@ public class MyService extends Service {
                     }
                 }
                 stopSelf();
-                Intent intentToDoProgressBarGone = new Intent(MyConstants.BROADCAST_ACTION_FOR_MY_SERVICE).putExtra("GONE", "gone");
+                Intent intentToDoProgressBarGone = new Intent(MyConstants.BROADCAST_ACTION_FOR_PROGRESS_BAR).putExtra("GONE", "gone");
                 sendBroadcast(intentToDoProgressBarGone);
                 sendNotificationStartService();
             }

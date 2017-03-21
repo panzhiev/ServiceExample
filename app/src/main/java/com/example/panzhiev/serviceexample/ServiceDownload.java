@@ -51,7 +51,7 @@ public class ServiceDownload extends Service {
         @Override
         public void run() {
             Log.d(TAG, "run()");
-            Intent intentToDoProgressBarVisible = new Intent(MyConstants.BROADCAST_ACTION_FOR_MY_SERVICE).putExtra("VISIBLE", "visible");
+            Intent intentToDoProgressBarVisible = new Intent(MyConstants.BROADCAST_ACTION_FOR_PROGRESS_BAR).putExtra("VISIBLE", "visible");
             sendBroadcast(intentToDoProgressBarVisible);
             ArrayList arrayList = new ArrayList();
             for (int i = 0; i < MyConstants.IMAGES_BOOK.length; i++) {

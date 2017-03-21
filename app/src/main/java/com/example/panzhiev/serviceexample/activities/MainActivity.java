@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //создаем интент фильтр, передаем в него ключ, по которому будем принимать входящий интент в бродкастресивере
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(MyConstants.BROADCAST_ACTION_FOR_SERVICE_DOWNLOAD);
-        intentFilter.addAction(MyConstants.BROADCAST_ACTION_FOR_MY_SERVICE);
+        intentFilter.addAction(MyConstants.BROADCAST_ACTION_FOR_PROGRESS_BAR);
 
 
         //инициализируем бродкастресивер
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (intent != null)
                 {
-                    if (intent.getAction().equals(MyConstants.BROADCAST_ACTION_FOR_MY_SERVICE)) {
+                    if (intent.getAction().equals(MyConstants.BROADCAST_ACTION_FOR_PROGRESS_BAR)) {
                         Log.d(TAG, "" + intent.getAction());
 
                         if (intent.hasExtra("GONE")) {
