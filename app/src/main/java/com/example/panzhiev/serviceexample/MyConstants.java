@@ -18,5 +18,6 @@ public class MyConstants {
             R.drawable.minaj};
 
     public static String ATTR_IMAGES = "ATTR_IMAGES";
-    public static String BROADCAST_ACTION = "BROADCAST_ACTION";
+    public static String BROADCAST_ACTION_FOR_SERVICE_DOWNLOAD = "BROADCAST_ACTION_FOR_SERVICE_DOWNLOAD";
+    public static String BROADCAST_ACTION_FOR_MY_SERVICE = "BROADCAST_ACTION_FOR_MY_SERVICE";
 }

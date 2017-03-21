@@ -51,7 +51,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //создаем интент фильтр, передаем в него ключ, по которому будем принимать входящий интент в бродкастресивере
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(MyConstants.BROADCAST_ACTION);
+        intentFilter.addAction(MyConstants.BROADCAST_ACTION_FOR_SERVICE_DOWNLOAD);
+        intentFilter.addAction(MyConstants.BROADCAST_ACTION_FOR_MY_SERVICE);
+
 
         //инициализируем бродкастресивер
         mReceiver = getReceiver();
@@ -106,12 +108,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.d(TAG, "onReceive(Context context, Intent intent)");
-                progressBar.setVisibility(View.GONE);
-                ArrayList arrayList = intent.getIntegerArrayListExtra(MyConstants.ATTR_IMAGES);
-                mAdapter = new MyAdapter(MainActivity.this, arrayList);
-                recyclerView.setVisibility(View.VISIBLE);
-                recyclerView.setAdapter(mAdapter);
+
+                if (intent != null)
+                {
+                    if (intent.getAction().equals(MyConstants.BROADCAST_ACTION_FOR_MY_SERVICE)) {
+                        Log.d(TAG, "" + intent.getAction());
+
+                        if (intent.hasExtra("GONE")) {
+                            progressBar.setVisibility(View.GONE);
+                            Log.d(TAG, "progressBarGone");
+
+                        } else if (intent.hasExtra("VISIBLE")) {
+                            progressBar.setVisibility(View.VISIBLE);
+                            Log.d(TAG, "progressBarVisible");
+                        }
+                    } else if (intent.getAction().equals(MyConstants.BROADCAST_ACTION_FOR_SERVICE_DOWNLOAD)) {
+                        Log.d(TAG, "" + intent.getAction());
+                        progressBar.setVisibility(View.GONE);
+                        ArrayList arrayList = intent.getIntegerArrayListExtra(MyConstants.ATTR_IMAGES);
+                        mAdapter = new MyAdapter(MainActivity.this, arrayList);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        recyclerView.setAdapter(mAdapter);
+                    }
+                }
             }
         };
     }

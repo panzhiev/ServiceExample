@@ -36,7 +36,6 @@ public class MyService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "started");
         sleep5000();
-
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -45,15 +44,15 @@ public class MyService extends Service {
         final int NOTIFY_ID = 101;
         nm = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
 
-        Intent startServiceIntent = new Intent(this, ServiceDownload.class);
-        PendingIntent startServicePendingIntent = PendingIntent.getService(this, 0, startServiceIntent, 0);
+        Intent startServiceDownloadIntent = new Intent(this, ServiceDownload.class);
+        PendingIntent startServicePendingIntent = PendingIntent.getService(this, 0, startServiceDownloadIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification.Builder builder = new Notification.Builder(MyService.this);
         builder.setContentIntent(startServicePendingIntent)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setWhen(System.currentTimeMillis())
-                .setContentTitle("Service has been started")
-                .setContentText("Follow to Main Activity")
+                .setContentTitle("Content has been prepared to download")
+                .setContentText("Tap to download content")
                 .setAutoCancel(true);
         Notification notification = builder.getNotification();
         nm.notify(NOTIFY_ID, notification);
@@ -77,6 +76,8 @@ public class MyService extends Service {
                     }
                 }
                 stopSelf();
+                Intent intentToDoProgressBarGone = new Intent(MyConstants.BROADCAST_ACTION_FOR_MY_SERVICE).putExtra("GONE", "gone");
+                sendBroadcast(intentToDoProgressBarGone);
                 sendNotificationStartService();
             }
         }).start();
