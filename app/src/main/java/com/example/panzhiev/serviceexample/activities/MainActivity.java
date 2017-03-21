@@ -36,23 +36,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d(TAG, "onCreate(Bundle savedInstanceState)");
 
+        //инициализируем элементы активности
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
         btnStartService = (Button) findViewById(R.id.btn_start_service);
-        btnStartService.setOnClickListener(this);
         btnStopService = (Button) findViewById(R.id.btn_stop_service);
-        btnStopService.setOnClickListener(this);
         btnClearNotification = (Button) findViewById(R.id.btn_clear_notification);
+        recyclerView = (RecyclerView) findViewById(R.id.rv_image);
+
+        //вешаем слушатели на кнопки
+        btnStartService.setOnClickListener(this);
+        btnStopService.setOnClickListener(this);
         btnClearNotification.setOnClickListener(this);
 
+        //создаем интент фильтр, передаем в него ключ, по которому будем принимать входящий интент в бродкастресивере
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(MyConstants.BROADCAST_ACTION);
+
+        //инициализируем бродкастресивер
         mReceiver = getReceiver();
+        //регестрируем бродкастресивер
         registerReceiver(mReceiver, intentFilter);
 
-        recyclerView = (RecyclerView) findViewById(R.id.rv_image);
+        //определяем тип отображения recyclerView
         mLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(mLayoutManager);
     }
@@ -66,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 btnClearNotification.setVisibility(View.GONE);
                 btnStopService.setVisibility(View.GONE);
                 startService(new Intent(this, MyService.class));
-                progressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
                 break;
             case R.id.btn_clear_notification:
                 break;

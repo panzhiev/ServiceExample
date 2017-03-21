@@ -48,15 +48,8 @@ public class MyService extends Service {
         final int NOTIFY_ID = 101;
         nm = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
 
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction("TIMUR");
-//        registerReceiver(myBroadcastReceiver, intentFilter);
-
         Intent startServiceIntent = new Intent(this, ServiceDownload.class);
         PendingIntent startServicePendingIntent = PendingIntent.getService(this, 0, startServiceIntent, 0);
-
-//        Intent notificationIntent = new Intent(this, MainActivity.class);
-//        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE);
 
         Notification.Builder builder = new Notification.Builder(MyService.this);
         builder.setContentIntent(startServicePendingIntent)
