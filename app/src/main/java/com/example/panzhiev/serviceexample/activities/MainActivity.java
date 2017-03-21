@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-import com.example.panzhiev.serviceexample.Constants;
+import com.example.panzhiev.serviceexample.MyConstants;
 import com.example.panzhiev.serviceexample.MyService;
 import com.example.panzhiev.serviceexample.R;
 import com.example.panzhiev.serviceexample.adapter.MyAdapter;
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnClearNotification.setOnClickListener(this);
 
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Constants.BROADCAST_ACTION);
+        intentFilter.addAction(MyConstants.BROADCAST_ACTION);
         mReceiver = getReceiver();
         registerReceiver(mReceiver, intentFilter);
 
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onReceive(Context context, Intent intent) {
                 Log.d(TAG, "onReceive(Context context, Intent intent)");
                 progressBar.setVisibility(View.GONE);
-                ArrayList arrayList = intent.getIntegerArrayListExtra(Constants.ATTR_IMAGES);
+                ArrayList arrayList = intent.getIntegerArrayListExtra(MyConstants.ATTR_IMAGES);
                 mAdapter = new MyAdapter(MainActivity.this, arrayList);
                 recyclerView.setVisibility(View.VISIBLE);
                 recyclerView.setAdapter(mAdapter);

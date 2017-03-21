@@ -48,16 +48,16 @@ public class ServiceDownload extends Service {
         public void run() {
             Log.d(TAG, "run()");
             ArrayList arrayList = new ArrayList();
-            for (int i = 0; i < Constants.IMAGES_BOOK.length; i++) {
+            for (int i = 0; i < MyConstants.IMAGES_BOOK.length; i++) {
                 try {
                     TimeUnit.MILLISECONDS.sleep(500);
-                    arrayList.add(Constants.IMAGES_BOOK[i]);
+                    arrayList.add(MyConstants.IMAGES_BOOK[i]);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
 
-            Intent intent = new Intent(Constants.BROADCAST_ACTION).putIntegerArrayListExtra(Constants.ATTR_IMAGES, arrayList);
+            Intent intent = new Intent(MyConstants.BROADCAST_ACTION).putIntegerArrayListExtra(MyConstants.ATTR_IMAGES, arrayList);
             sendBroadcast(intent);
             stopSelfResult(startId);
         }
