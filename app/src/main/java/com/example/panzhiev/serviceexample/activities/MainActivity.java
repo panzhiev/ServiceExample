@@ -66,13 +66,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_start_service:
 
+            case R.id.btn_start_service:
                 btnStartService.setVisibility(View.GONE);
                 btnClearNotification.setVisibility(View.GONE);
                 btnStopService.setVisibility(View.GONE);
-                startService(new Intent(this, MyService.class));
                 progressBar.setVisibility(View.VISIBLE);
+
+                startService(new Intent(this, MyService.class));
+
                 break;
             case R.id.btn_clear_notification:
                 break;
@@ -100,8 +102,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onStop();
     }
 
-    private BroadcastReceiver getReceiver(){
-        return  new BroadcastReceiver() {
+    private BroadcastReceiver getReceiver() {
+        return new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Log.d(TAG, "onReceive(Context context, Intent intent)");

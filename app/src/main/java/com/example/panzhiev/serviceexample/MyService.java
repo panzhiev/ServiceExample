@@ -9,6 +9,8 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by Panzhiev on 15.03.2017.
  */
@@ -32,19 +34,14 @@ public class MyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         Log.d(TAG, "started");
-        sendNotificationStartService();
+        sleep5000();
 
-//        sendBroadcast(new Intent().setAction("TIMUR"));
         return super.onStartCommand(intent, flags, startId);
     }
 
     private void sendNotificationStartService() {
+
         final int NOTIFY_ID = 101;
         nm = (NotificationManager) getSystemService(this.NOTIFICATION_SERVICE);
 
@@ -66,5 +63,22 @@ public class MyService extends Service {
     public void onDestroy() {
         Log.d(TAG, "stoped");
         super.onDestroy();
+    }
+
+    private void sleep5000() {
+        new Thread(new Runnable() {
+            public void run() {
+                for (int i = 1; i<=5; i++) {
+                    Log.d(TAG, "i = " + i);
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                stopSelf();
+                sendNotificationStartService();
+            }
+        }).start();
     }
 }
