@@ -40,13 +40,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //инициализируем элементы активности
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnStartService = (Button) findViewById(R.id.btn_start_service);
-        btnStopService = (Button) findViewById(R.id.btn_stop_service);
         btnClearNotification = (Button) findViewById(R.id.btn_clear_notification);
         recyclerView = (RecyclerView) findViewById(R.id.rv_image);
 
         //вешаем слушатели на кнопки
         btnStartService.setOnClickListener(this);
-        btnStopService.setOnClickListener(this);
         btnClearNotification.setOnClickListener(this);
 
         //создаем интент фильтр, передаем в него ключ, по которому будем принимать входящий интент в бродкастресивере
@@ -74,14 +72,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 btnClearNotification.setVisibility(View.GONE);
                 btnStopService.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
-
                 startService(new Intent(this, MyService.class));
 
                 break;
             case R.id.btn_clear_notification:
-                break;
-            case R.id.btn_stop_service:
-                stopService(new Intent(this, MyService.class));
                 break;
             default:
                 break;
