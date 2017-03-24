@@ -1,5 +1,6 @@
 package com.example.panzhiev.serviceexample.activities;
 
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RecyclerView recyclerView;
     RecyclerView.LayoutManager mLayoutManager;
     Button btnStartService;
-    Button btnStopService;
     Button btnClearNotification;
     public String TAG = "MY_MAIN_ACTIVITY";
     ProgressBar progressBar;
@@ -70,12 +70,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_start_service:
                 btnStartService.setVisibility(View.GONE);
                 btnClearNotification.setVisibility(View.GONE);
-                btnStopService.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
+
                 startService(new Intent(this, MyService.class));
 
                 break;
             case R.id.btn_clear_notification:
+                NotificationManager notification = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                notification.cancelAll();
                 break;
             default:
                 break;
