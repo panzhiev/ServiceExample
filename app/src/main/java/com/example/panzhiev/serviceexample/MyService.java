@@ -9,6 +9,8 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,9 +21,11 @@ public class MyService extends Service {
 
     NotificationManager nm;
     public String TAG = "MY_MyService: ";
+    ExecutorService mEexecutorService;
 
     @Override
     public void onCreate() {
+        mEexecutorService = Executors.newFixedThreadPool(1);
         Log.d(TAG, "onCreate is started");
         super.onCreate();
     }
@@ -65,7 +69,7 @@ public class MyService extends Service {
     }
 
     private void sleep5000() {
-        new Thread(new Runnable() {
+        mEexecutorService.execute(new Runnable() {
             public void run() {
                 for (int i = 1; i<=5; i++) {
                     Log.d(TAG, "i = " + i);
@@ -80,6 +84,6 @@ public class MyService extends Service {
                 sendBroadcast(intentToDoProgressBarGone);
                 sendNotificationStartService();
             }
-        }).start();
+        });
     }
 }

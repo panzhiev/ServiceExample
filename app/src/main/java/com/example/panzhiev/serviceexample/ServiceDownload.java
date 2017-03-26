@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -16,9 +18,11 @@ import java.util.concurrent.TimeUnit;
 public class ServiceDownload extends Service {
 
     public String TAG = "MY_ServiceDownload: ";
+    ExecutorService mEexecutorService;
 
     @Override
     public void onCreate() {
+        mEexecutorService = Executors.newFixedThreadPool(1);
         super.onCreate();
         Log.d(TAG, "onCreate");
     }
@@ -26,9 +30,9 @@ public class ServiceDownload extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "onStartCommand");
-
-        MyRun myRun = new MyRun(startId);
-        new Thread(myRun).start();
+        mEexecutorService.execute(new MyRun(startId));
+//        MyRun myRun = new MyRun(startId);
+//        new Thread(myRun).start();
 
         return super.onStartCommand(intent, flags, startId);
     }
